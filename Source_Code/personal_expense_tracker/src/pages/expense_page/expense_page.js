@@ -7,7 +7,7 @@ export default function expensePage(email, balance, func) {
         const { value: formValues } = await Swal.fire({
             title: "Add Expense",
             html: '<input id="amount" class="swal2-input" placeholder="Enter amount" type="number">' +
-                '<select name="category" class="swal2-input" id="category" ><option value="" disabled selected>Select category</option><option value="bills">Bills</option><option value="education">Education</option><option value="medicine">Medicine</option><option value="others">Others</option></select>',
+                '<select name="category" class="swal2-input" id="category" ><option value="" disabled selected>Select category</option><option value="grocerry">Grocerry</option><option value="utility bills">Utility Bills</option><option value="transport">Transport</option><option value="education">Education</option><option value="medicine">Medicine</option><option value="others">Others</option></select>',
             position: 'center',
             showConfirmButton: true,
             showCancelButton: true,

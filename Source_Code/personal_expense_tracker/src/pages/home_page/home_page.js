@@ -8,7 +8,7 @@ import Profile from '../profile_page/profile_page';
 import Expense from '../expense_page/expense_page';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded'; 
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import IconButton from '@mui/material/IconButton';
 // import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -22,97 +22,100 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { createSearchParams } from 'react-router-dom';
 // import Expense from '../expense_page/expense_page';
 
 export default function Home() {
-    const navigation = useNavigate()
-    const theme = createTheme({
-        palette: {
-            primary: {
-                // Purple and green play nicely together.
-                main: "#ff9999",
-            },
-            secondary: {
-                // This is green.A700 as hex.
-                main: '#11cb5f',
-            },
-        },
-    });
-    const dashboardPage = () => {
-        toggleDrawer()
-        navigation('/expensetracker/dashboard')
-    }
-    const profilePage = () => {
-        toggleDrawer()
-        navigation('/expensetracker/profile')
-    }
+  const navigation = useNavigate()
+  const inputurl = new URL(window.location.href)
+  const email = inputurl.searchParams.get('email')
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // Purple and green play nicely together.
+        main: "#ff9999",
+      },
+      secondary: {
+        // This is green.A700 as hex.
+        main: '#11cb5f',
+      },
+    },
+  });
+  const dashboardPage = () => {
+    toggleDrawer()
+    navigation({ pathname: '/expensetracker/dashboard', search: createSearchParams({ email: email }).toString() })
+  }
+  const profilePage = () => {
+    toggleDrawer()
+    navigation({ pathname: '/expensetracker/profile', search: createSearchParams({ email: email }).toString() })
+  }
 
-    // const expense_Page = () =>{
-    //   <Ex
-    // }
+  // const expense_Page = () =>{
+  //   <Ex
+  // }
 
-    const [state, setState] = React.useState({
-        isopen: false,
-      });
-    
-      const toggleDrawer = () => {
-        setState({ isopen: !state.isopen });
-      };
+  const [state, setState] = React.useState({
+    isopen: false,
+  });
+
+  const toggleDrawer = () => {
+    setState({ isopen: !state.isopen });
+  };
 
 
-      const list = () => (
-        <Box
-          sx={{ width:'auto' }}
-          role="presentation"
+  const list = () => (
+    <Box
+      sx={{ width: 'auto' }}
+      role="presentation"
+    >
+      <List>
+        <ListItem>
+          <ListItemButton onClick={dashboardPage}>
+            <ListItemIcon>
+              <LeaderboardRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton onClick={profilePage}>
+            <ListItemIcon>
+              <LeaderboardRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+    </Box>
+  );
+
+  return (<ThemeProvider theme={theme}>
+    <div className='background'>
+      <IconButton onClick={toggleDrawer} color="primary">
+        <MenuRoundedIcon />
+      </IconButton>
+      <Typography variant='h4' sx={{ marginTop: 1, marginBottom: 1 }} color="primary">
+        Personal Expense Tracker
+      </Typography>
+    </div>
+    <div>
+      <div>
+        <Drawer
+          anchor='left'
+          open={state.isopen}
+          onClose={toggleDrawer}
         >
-          <List>
-            <ListItem>
-            <ListItemButton onClick={dashboardPage}>
-                  <ListItemIcon>
-                    <LeaderboardRoundedIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
-                </ListItemButton>
-            </ListItem>
-            <ListItem>
-            <ListItemButton onClick={profilePage}>
-                  <ListItemIcon>
-                    <LeaderboardRoundedIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary="Profile" />
-                </ListItemButton>
-            </ListItem>
-          </List>
-          <Divider />
-        </Box>
-      );
-
-    return (<ThemeProvider theme={theme}>
-        <div className='background'>
-            <IconButton onClick={toggleDrawer} color="primary">
-            <MenuRoundedIcon/>
-            </IconButton>
-            <Typography variant='h4' sx={{marginTop:1,marginBottom:1}} color="primary">
-              Personal Expense Tracker
-            </Typography>
-        </div>
-        <div>
-            <div>
-            <Drawer
-            anchor='left'
-            open={state.isopen}
-            onClose={toggleDrawer}
-          >
-            {list()}
-          </Drawer>
-                <Routes>
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="profile" element={<Profile />} />
-                </Routes>
-            </div>
-        </div>
-    </ThemeProvider>
-    )
+          {list()}
+        </Drawer>
+        <Routes>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+        </Routes>
+      </div>
+    </div>
+  </ThemeProvider>
+  )
 }
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

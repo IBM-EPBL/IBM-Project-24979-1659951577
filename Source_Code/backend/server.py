@@ -34,6 +34,8 @@ def register():
         credentials = json.loads(request.data)
         sql = "INSERT INTO login VALUES('{}','{}')".format(credentials['email'],credentials['password']) 
         out = ibm_db.exec_immediate(conn, sql) 
+        sql = "INSERT INTO personal_info(email,name) VALUES('{}','{}')".format(credentials['email'],credentials['name']) 
+        out = ibm_db.exec_immediate(conn, sql) 
         response = json_response(200)
         return response 
 
@@ -50,7 +52,10 @@ def loadData():
     sql = "select walletlimit from personal_info where email = '{}'".format(email) 
     out = ibm_db.exec_immediate(conn, sql) 
     document = ibm_db.fetch_assoc(out)
-    resultData['balance'] = document['WALLETLIMIT'] - totalExpense
+    if resultData['totalExpense'] == None:
+        resultData['balance'] = 0
+    else:
+        resultData['balance'] = document['WALLETLIMIT'] - totalExpense
     sql = "select category, sum(amount) as expense from expenses where email='{}' and month(timestamp)=month(current_timestamp) group by category".format(email) 
     out = ibm_db.exec_immediate(conn, sql) 
     document = ibm_db.fetch_assoc(out)
@@ -104,7 +109,7 @@ def personalData():
     resultData = {
         'name' : document['NAME'],
         'email' : email,
-        'phone' : document['phone'],
+        'phone' : document['PHONE'],
         'gender': document['GENDER'],
         'location': document['LOCATION'],
         'walletlimit':document['WALLETLIMIT']
@@ -115,6 +120,17 @@ def personalData():
     resultData['password'] = document['PASSWORD']
     response = json_response(resultData=resultData)
     return response;
+
+@app.route('/updateProfile',methods=['POST'])
+def updateProfile():
+    if request.method == "POST":
+        credentials = json.loads(request.data)
+        sql = "UPDATE login SET password='{}' where email='{}'".format(credentials['password'],credentials['email']) 
+        out = ibm_db.exec_immediate(conn, sql) 
+        sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone={} where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
+        out = ibm_db.exec_immediate(conn, sql) 
+        response = json_response(200)
+        return response 
 
 
 # Running app

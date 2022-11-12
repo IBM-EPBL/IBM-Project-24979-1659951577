@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
   const navigation = useNavigate()
-  const location = useLocation()
   const theme = createTheme({
     palette: {
       primary: {
@@ -42,7 +41,7 @@ function App() {
       <div class="right">
         <Routes>
           <Route path="/" element={<Login navigation={navigation} />} />
-          <Route path="/register" element={<Register navigation={navigation} location={location} />} />
+          <Route path="/register" element={<Register navigation={navigation} />} />
         </Routes>
       </div>
     </div>
