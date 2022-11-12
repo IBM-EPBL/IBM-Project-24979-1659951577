@@ -4,6 +4,7 @@ import './style.css'
 import CustomButton from "../../components/Button/button";
 import Text from "../../components/Text/text";
 import Input from "../../components/Input/input";
+import { createSearchParams } from "react-router-dom";
 export default class Login extends React.Component{
     render(){
         const notification = {
@@ -29,7 +30,7 @@ export default class Login extends React.Component{
                         notification.text="Email id is not registered"
                         Swal.fire(notification)
                     }else if(data.value ===1){
-                        navigation('/dashboard',{state:{email:email}})
+                        navigation({pathname :'/expensetracker/dashboard',search:createSearchParams({email:email}).toString()})
                     }else if(data.value===2){
                         notification.title="Invalid Password"
                         notification.text="Please provide correct password"

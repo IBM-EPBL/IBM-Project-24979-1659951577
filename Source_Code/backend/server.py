@@ -3,6 +3,7 @@ from flask import Flask, request, json, jsonify
 from flask_json import FlaskJSON, json_response
 from flask_cors import CORS
 import ibm_db
+from template import *
 
 # Initializing flask app
 app = Flask(__name__)
@@ -35,6 +36,85 @@ def register():
         out = ibm_db.exec_immediate(conn, sql) 
         response = json_response(200)
         return response 
+
+@app.route('/loadData')
+def loadData():
+    email = request.args.get('email')
+    sql = "select sum(amount) as expense from expenses where email='{}' and month(timestamp)=month(current_timestamp)".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    totalExpense = document['EXPENSE']
+    resultData = {
+        'totalExpense' : document['EXPENSE']
+    }
+    sql = "select walletlimit from personal_info where email = '{}'".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    resultData['balance'] = document['WALLETLIMIT'] - totalExpense
+    sql = "select category, sum(amount) as expense from expenses where email='{}' and month(timestamp)=month(current_timestamp) group by category".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    piegraphData = []
+    piegraphLabel = []
+    while document != False:
+        piegraphLabel.append(document["CATEGORY"])
+        piegraphData.append(document["EXPENSE"])
+        document = ibm_db.fetch_assoc(out)
+    resultData['piegraphdata'] = piegraphData
+    resultData['piegraphlabel'] = piegraphLabel
+    sql = "select dayname(cast(timestamp as date)) as day, sum(amount) as expense from expenses,sysibm.sysdummy1 where email='{}' and week(timestamp)=week(current_timestamp) group by cast(timestamp as date)".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    bargraphData = []
+    bargraphLabel =[]
+    while document != False:
+        bargraphLabel.append(document['DAY'])
+        bargraphData.append(document["EXPENSE"])
+        document = ibm_db.fetch_assoc(out)
+    resultData['bargraphdata'] = bargraphData
+    resultData['bargraphlabel'] = bargraphLabel
+    sql = "select sum(amount) as expense from expenses where email='{}' and date(timestamp)=date(current_timestamp)".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    resultData['dailyExpense']=document['EXPENSE']
+    response = json_response(resultData=resultData)
+    return response
+
+@app.route('/addExpense', methods=['POST'])
+def addExpense():
+    if request.method == "POST":
+        expense = json.loads(request.data)
+        sql = "INSERT INTO expenses(email,category,amount) VALUES('{}','{}',{})".format(expense['email'],expense['category'],expense['amount']) 
+        out = ibm_db.exec_immediate(conn, sql) 
+        response = json_response(200)
+        return response
+
+@app.route('/limitExceed')
+def limitExceed():
+    email = request.args.get('email')
+    SendDynamic()
+    return json_response(200)
+
+@app.route('/personalData')
+def personalData():
+    email = request.args.get('email')
+    sql = "select * from  personal_info where email='{}'".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    resultData = {
+        'name' : document['NAME'],
+        'email' : email,
+        'phone' : document['phone'],
+        'gender': document['GENDER'],
+        'location': document['LOCATION'],
+        'walletlimit':document['WALLETLIMIT']
+    }
+    sql = "select * from login where email='{}'".format(email) 
+    out = ibm_db.exec_immediate(conn, sql) 
+    document = ibm_db.fetch_assoc(out)
+    resultData['password'] = document['PASSWORD']
+    response = json_response(resultData=resultData)
+    return response;
 
 
 # Running app
