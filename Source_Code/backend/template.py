@@ -9,9 +9,7 @@ FROM_EMAIL = 'gokul6073@gmail.com'
 TEMPLATE_ID = 'd-4d87db5df1564451a65390ca17cbd056'
 
 # list of emails and preheader names, update with yours
-TO_EMAILS = [('19euit050@skcet.ac.in', 'Krish'),
-             # update email and name
-             ('19euit042@skcet.ac.in', 'Dhiksha')]
+TO_EMAILS = [('19euit050@skcet.ac.in', 'Krish'),('19euit051@skcet.ac.in', 'Krish')]
 
 
 def SendDynamic():
@@ -24,11 +22,11 @@ def SendDynamic():
         from_email=FROM_EMAIL,
         to_emails=TO_EMAILS)
     # pass custom values for our HTML placeholders
-    # message.dynamic_template_data = {
-    #     'subject': 'SendGrid Development',
-    #     'place': 'New York City',
-    #     'event': 'Twilio Signal'
-    # }
+    message.dynamic_template_data = {
+        'subject': 'Expense Limit Exceed Alert',
+        # 'place': 'New York City',
+        # 'event': 'Twilio Signal'
+    }
     message.template_id = TEMPLATE_ID
     # create our sendgrid client object, pass it our key, then send and return our response objects
     try:
