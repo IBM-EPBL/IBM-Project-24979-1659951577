@@ -23,6 +23,6 @@ spec:
       containers:
         - name: frontend-container
           image: frontendvm
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
