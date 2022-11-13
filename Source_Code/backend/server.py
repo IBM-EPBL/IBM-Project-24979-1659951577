@@ -130,9 +130,8 @@ def updateProfile():
         sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone={} where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
         out = ibm_db.exec_immediate(conn, sql) 
         response = json_response(200)
-        return response 
-
+        return response
 
 # Running app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=('0.0.0.0'), port=5000)

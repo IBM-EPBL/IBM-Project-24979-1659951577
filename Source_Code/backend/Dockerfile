@@ -5,4 +5,4 @@ COPY ./requirements.txt ./server.py ./DigiCertGlobalRootCA.crt ./template.py ./
 RUN pip install -r ./requirements.txt
 
 EXPOSE 5000
-CMD ["py", "server.py"]
+CMD ["python", "./server.py"]
