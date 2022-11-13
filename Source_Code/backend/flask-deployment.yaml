@@ -19,6 +19,6 @@ spec:
     containers:
       - name: flask-container
         image: backend
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
           - containerPort: 5000

@@ -9,7 +9,7 @@ from config import *
 # Initializing flask app
 app = Flask(__name__)
 jsonObj = FlaskJSON(app)
-cors = CORS(app,resources={r'*':{'origins':ORIGIN}})
+cors = CORS(app,resources={r'*':{'origins':'*'}})
 
 conn=ibm_db.connect("DATABASE=bludb;HOSTNAME=0c77d6f2-5da9-48a9-81f8-86b520b87518.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=31198;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=txm14386;PWD=SuJ9Kf0eIJGynsB9;","","")
 
