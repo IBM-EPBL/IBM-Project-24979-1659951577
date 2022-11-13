@@ -4,11 +4,12 @@ from flask_json import FlaskJSON, json_response
 from flask_cors import CORS
 import ibm_db
 from template import *
+from config import *
 
 # Initializing flask app
 app = Flask(__name__)
 jsonObj = FlaskJSON(app)
-cors = CORS(app,resources={r'*':{'origins':'http://localhost:3000'}})
+cors = CORS(app,resources={r'*':{'origins':ORIGIN}})
 
 conn=ibm_db.connect("DATABASE=bludb;HOSTNAME=0c77d6f2-5da9-48a9-81f8-86b520b87518.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=31198;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=txm14386;PWD=SuJ9Kf0eIJGynsB9;","","")
 
@@ -97,7 +98,7 @@ def addExpense():
 @app.route('/limitExceed')
 def limitExceed():
     email = request.args.get('email')
-    SendDynamic()
+    SendDynamic(email)
     return json_response(200)
 
 @app.route('/personalData')
@@ -127,7 +128,7 @@ def updateProfile():
         credentials = json.loads(request.data)
         sql = "UPDATE login SET password='{}' where email='{}'".format(credentials['password'],credentials['email']) 
         out = ibm_db.exec_immediate(conn, sql) 
-        sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone={} where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
+        sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone='{}' where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
         out = ibm_db.exec_immediate(conn, sql) 
         response = json_response(200)
         return response
