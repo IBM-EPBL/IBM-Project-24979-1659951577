@@ -2,15 +2,10 @@ import {
   Routes,
   Route,
   useNavigate,
-  useLocation,
 } from "react-router-dom";
-// import Home from './pages/home_page/home_page';
 import Login from "./pages/login_page/login_page";
 import Register from "./pages/register_page/register_page";
-// import Dashboard from "./pages/dashboard_page/dashboard_page";
 import './App.css';
-// import { ThemeProvider } from "@emotion/react";
-// import { createTheme } from "@mui/system";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function App() {
@@ -18,11 +13,9 @@ function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        // Purple and green play nicely together.
         main: "#ff9999",
       },
       secondary: {
-        // This is green.A700 as hex.
         main: '#11cb5f',
       },
     },

@@ -5,6 +5,7 @@ import CustomButton from "../../components/Button/button";
 import Text from "../../components/Text/text";
 import Input from "../../components/Input/input";
 import { createSearchParams } from "react-router-dom";
+import { server } from "../../config";
 export default class Login extends React.Component{
     render(){
         const notification = {
@@ -20,7 +21,7 @@ export default class Login extends React.Component{
         const login = async() =>{
             const email = document.getElementById('emailInput_login').value;
             const password = document.getElementById('passwordInput_login').value;
-            let url= new URL("http://localhost:5000/login")
+            let url= new URL(server+"/login")
             url.searchParams.set('email',email)
             url.searchParams.set('password',password)
             fetch(url).then((res)=>{

@@ -1,5 +1,6 @@
 import React from "react"
 import Swal from "sweetalert2"
+import { server } from "../../config"
 
 export default function expensePage(email, balance, func) {
     // render() {
@@ -36,7 +37,7 @@ export default function expensePage(email, balance, func) {
                     timer: 2000
                 })
             } else {
-                const url = new URL("http:localhost:5000/addExpense")
+                const url = new URL(server+"/addExpense")
                 let expense = {
                     amount: parseInt(formValues[0]),
                     category: formValues[1],
@@ -61,7 +62,7 @@ export default function expensePage(email, balance, func) {
                         timer: 2000
                     })
                     if (balance - parseInt(formValues[0]) < 0) {
-                        let url = new URL("http://localhost:5000/limitExceed")
+                        let url = new URL(server+"/limitExceed")
                         url.searchParams.set('email', email)
                         fetch(url).then((res) => {
                             console.log(res.json())

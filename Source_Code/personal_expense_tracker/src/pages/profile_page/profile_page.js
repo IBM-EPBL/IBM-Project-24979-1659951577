@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Box, Divider, Grid, requirePropFactory, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 import Lottie from 'react-lottie';
 import animationData from '../../assets/profile_loading.json';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Swal from "sweetalert2";
 import validator from "validator";
 import Paper from "@mui/material/Paper";
+import { server } from "../../config";
 
 export default function Profile() {
     const [personalData, setPersonalData] = useState({})
@@ -17,7 +18,7 @@ export default function Profile() {
 
     const loadPersonalInfo = () => {
         setIsPersonalDataLoaded(false)
-        let url = new URL("http://localhost:5000/personalData")
+        let url = new URL(server+"/personalData")
         url.searchParams.set('email', email)
         fetch(url).then((res) => {
             res.json().then((data) => {
@@ -53,12 +54,12 @@ export default function Profile() {
             email: personalData.email == null ? '' : personalData.email,
             password: personalData.password == null ? '' : personalData.password,
             gender: personalData.gender == null ? '' : personalData.gender,
-            location: personalData.location == null ? "Hiiii" : personalData.location,
-            phone: personalData.phone == null ? '+91' : personalData.phone,
+            location: personalData.location == null ? '' : personalData.location,
+            phone: personalData.phone == null ? '' : personalData.phone,
             walletlimit: personalData.walletlimit == null ? 0 : personalData.walletlimit
         }
         console.log(credentials)
-        let url= new URL("http:localhost:5000/updateProfile") 
+        let url= new URL(server+"/updateProfile") 
         fetch(url,{
             method: 'POST',
             headers: {
@@ -93,17 +94,16 @@ export default function Profile() {
     }
 
     const setName = () => {
+        setValChanged(true)
         Swal.fire({
             showConfirmButton: true,
             input: 'text',
             title: 'Edit Name',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
         }).then((result) => {
             if (result.isConfirmed === true) {
-                setValChanged(true)
                 let name = result.value.replace(/\s/g, '');
                 if (!validator.isAlpha(name)) {
                     Swal.fire({
@@ -117,20 +117,21 @@ export default function Profile() {
                     })
                 } else {
                     setPersonalData({ ...personalData, name: result.value })
-                    setValChanged(false)
                 }
+            }else{
+                setValChanged(false)
             }
         }
         )
     }
 
     const setPassword = async() => {
+        setValChanged(true)
         Swal.fire({
             showConfirmButton: true,
             input: 'password',
             title: 'Edit Password',
             showConfirmButton: true,
-            showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
         }).then((result) => {
@@ -146,10 +147,10 @@ export default function Profile() {
                         showConfirmButton: false
                     })
                 } else {
-                    setValChanged(true)
                     setPersonalData({ ...personalData, password: result.value })
-                    setValChanged(false)
                 }
+            }else{
+            setValChanged(false)
             }
         }
         )
@@ -161,7 +162,6 @@ export default function Profile() {
             showConfirmButton: true,
             input: 'text',
             title: 'Edit Location',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
@@ -180,12 +180,15 @@ export default function Profile() {
                 } else {
                     setPersonalData({ ...personalData, location: result.value })
                 }
+            }else{
+                setValChanged(false)
             }
         }
         )
     }
 
     const setPhone = () => {
+        setValChanged(true)
         Swal.fire({
             showConfirmButton: true,
             input: 'number',
@@ -207,18 +210,18 @@ export default function Profile() {
                         showConfirmButton: false
                     })
                 } else {
-                    setValChanged(true)
                     setPersonalData({ ...personalData, phone: result.value })
-                    setValChanged(false)
                 }
+            }else{
+                setValChanged(false)
             }
         }
         )
     }
-
+    
     const setGender = () => {
+        setValChanged(true)
         Swal.fire({
-            title: 'Select Gender',
             input: 'select',
             inputOptions: {
                 'male': 'Male',
@@ -236,27 +239,26 @@ export default function Profile() {
             },
             showConfirmButton: true,
             title: 'Edit Gender',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
 
         }).then((result) => {
             if (result.isConfirmed === true) {
-                setValChanged(true)
                 setPersonalData({ ...personalData, gender: result.value })
-                setValChanged(false)
+            }else{
+            setValChanged(false)
             }
         }
         )
     }
 
     const setWalletLimit = () => {
+        setValChanged(true)
         Swal.fire({
             showConfirmButton: true,
             input: 'number',
             title: 'Edit Wallet Limit',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
@@ -273,10 +275,10 @@ export default function Profile() {
                         showConfirmButton: false
                     })
                 } else {
-                    setValChanged(true)
                     setPersonalData({ ...personalData, walletlimit: result.value })
-                    setValChanged(false)
                 }
+            }else{
+                setValChanged(false)
             }
         }
         )

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import Text from "../../components/Text/text";
 import CustomButton from "../../components/Button/button";
 import Input from "../../components/Input/input";
+import { server } from "../../config";
 
 export default class Register extends React.Component{
     render(){
@@ -46,7 +47,7 @@ export default class Register extends React.Component{
                     email: email,
                     password: password,
                 }
-                let url= new URL("http://localhost:5000/register")
+                let url= new URL(server+"/register")
                 fetch(url,{
                     method: 'POST',
                     headers: {
