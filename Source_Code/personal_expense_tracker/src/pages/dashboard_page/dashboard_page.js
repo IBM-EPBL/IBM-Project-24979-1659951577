@@ -22,7 +22,7 @@ import expensePage from "../expense_page/expense_page";
 import Lottie from 'react-lottie';
 import animationData from '../../assets/loading.json';
 import './style.css'
-import { server } from "../../../public/config";
+import { server } from "../../config";
 export default function Dashboard() {
     // constructor(props) {
     //     super(props);

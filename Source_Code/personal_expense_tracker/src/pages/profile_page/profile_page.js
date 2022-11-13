@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Box, Divider, Grid, requirePropFactory, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
 import Lottie from 'react-lottie';
 import animationData from '../../assets/profile_loading.json';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Swal from "sweetalert2";
 import validator from "validator";
 import Paper from "@mui/material/Paper";
-import { server } from "../../../public/config";
+import { server } from "../../config";
 
 export default function Profile() {
     const [personalData, setPersonalData] = useState({})
@@ -99,7 +99,6 @@ export default function Profile() {
             showConfirmButton: true,
             input: 'text',
             title: 'Edit Name',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
@@ -133,7 +132,6 @@ export default function Profile() {
             input: 'password',
             title: 'Edit Password',
             showConfirmButton: true,
-            showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
         }).then((result) => {
@@ -164,7 +162,6 @@ export default function Profile() {
             showConfirmButton: true,
             input: 'text',
             title: 'Edit Location',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
@@ -225,7 +222,6 @@ export default function Profile() {
     const setGender = () => {
         setValChanged(true)
         Swal.fire({
-            title: 'Select Gender',
             input: 'select',
             inputOptions: {
                 'male': 'Male',
@@ -243,7 +239,6 @@ export default function Profile() {
             },
             showConfirmButton: true,
             title: 'Edit Gender',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",
@@ -264,7 +259,6 @@ export default function Profile() {
             showConfirmButton: true,
             input: 'number',
             title: 'Edit Wallet Limit',
-            showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: "Add",
             confirmButtonColor: "green",

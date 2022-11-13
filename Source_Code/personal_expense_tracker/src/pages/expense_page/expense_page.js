@@ -1,6 +1,6 @@
 import React from "react"
 import Swal from "sweetalert2"
-import { server } from "../../../public/config"
+import { server } from "../../config"
 
 export default function expensePage(email, balance, func) {
     // render() {

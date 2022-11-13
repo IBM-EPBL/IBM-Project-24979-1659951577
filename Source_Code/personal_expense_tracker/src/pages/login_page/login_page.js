@@ -5,7 +5,7 @@ import CustomButton from "../../components/Button/button";
 import Text from "../../components/Text/text";
 import Input from "../../components/Input/input";
 import { createSearchParams } from "react-router-dom";
-import { server } from "../../../public/config";
+import { server } from "../../config";
 export default class Login extends React.Component{
     render(){
         const notification = {

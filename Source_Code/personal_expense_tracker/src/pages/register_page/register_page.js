@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import Text from "../../components/Text/text";
 import CustomButton from "../../components/Button/button";
 import Input from "../../components/Input/input";
-import { server } from "../../../public/config";
+import { server } from "../../config";
 
 export default class Register extends React.Component{
     render(){
