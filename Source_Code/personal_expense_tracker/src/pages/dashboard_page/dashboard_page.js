@@ -33,7 +33,7 @@ export default function Dashboard() {
 
     const loadData = async () => {
         setisDataLoaded(false)
-        let url = new URL(server+"/loadData")
+        let url = new URL("/loadData")
         url.searchParams.set('email', email)
         fetch(url).then((res) => {
             res.json().then((data) => {
