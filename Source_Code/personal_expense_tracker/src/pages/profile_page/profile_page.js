@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Swal from "sweetalert2";
 import validator from "validator";
 import Paper from "@mui/material/Paper";
+import { server } from "../../../public/config";
 
 export default function Profile() {
     const [personalData, setPersonalData] = useState({})
@@ -17,7 +18,7 @@ export default function Profile() {
 
     const loadPersonalInfo = () => {
         setIsPersonalDataLoaded(false)
-        let url = new URL("http://localhost:5000/personalData")
+        let url = new URL(server+"/personalData")
         url.searchParams.set('email', email)
         fetch(url).then((res) => {
             res.json().then((data) => {
@@ -58,7 +59,7 @@ export default function Profile() {
             walletlimit: personalData.walletlimit == null ? 0 : personalData.walletlimit
         }
         console.log(credentials)
-        let url= new URL("http:localhost:5000/updateProfile") 
+        let url= new URL(server+"/updateProfile") 
         fetch(url,{
             method: 'POST',
             headers: {
