@@ -127,7 +127,7 @@ def updateProfile():
         credentials = json.loads(request.data)
         sql = "UPDATE login SET password='{}' where email='{}'".format(credentials['password'],credentials['email']) 
         out = ibm_db.exec_immediate(conn, sql) 
-        sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone={} where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
+        sql = "UPDATE personal_info SET name='{}', walletlimit={}, gender='{}', location='{}', phone='{}' where email='{}' ".format(credentials['name'],credentials['walletlimit'],credentials['gender'],credentials['location'],credentials['phone'], credentials['email']) 
         out = ibm_db.exec_immediate(conn, sql) 
         response = json_response(200)
         return response 

@@ -53,8 +53,8 @@ export default function Profile() {
             email: personalData.email == null ? '' : personalData.email,
             password: personalData.password == null ? '' : personalData.password,
             gender: personalData.gender == null ? '' : personalData.gender,
-            location: personalData.location == null ? "Hiiii" : personalData.location,
-            phone: personalData.phone == null ? '+91' : personalData.phone,
+            location: personalData.location == null ? '' : personalData.location,
+            phone: personalData.phone == null ? '' : personalData.phone,
             walletlimit: personalData.walletlimit == null ? 0 : personalData.walletlimit
         }
         console.log(credentials)

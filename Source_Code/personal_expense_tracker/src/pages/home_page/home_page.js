@@ -10,6 +10,8 @@ import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import IconButton from '@mui/material/IconButton';
+import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 // import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -50,6 +52,11 @@ export default function Home() {
     navigation({ pathname: '/expensetracker/profile', search: createSearchParams({ email: email }).toString() })
   }
 
+  const logout = () =>{
+    toggleDrawer()
+    navigation('/')
+  }
+
   // const expense_Page = () =>{
   //   <Ex
   // }
@@ -65,9 +72,15 @@ export default function Home() {
 
   const list = () => (
     <Box
-      sx={{ width: 'auto' }}
+      sx={{ width: 'auto',  }}
       role="presentation"
     >
+      <br/>
+      <Typography variant='button'sx={{margin:4}}>Menu</Typography>
+      <br/><br/>
+      <Divider/>
+      <Box sx={{height:500,display:'flex', flexDirection:'column',justifyContent:'space-between'}}>
+      <Box sx={{flex:1}}>
       <List>
         <ListItem>
           <ListItemButton onClick={dashboardPage}>
@@ -80,22 +93,37 @@ export default function Home() {
         <ListItem>
           <ListItemButton onClick={profilePage}>
             <ListItemIcon>
-              <LeaderboardRoundedIcon />
+              <AccountCircleSharpIcon/>
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItemButton>
         </ListItem>
       </List>
       <Divider />
+      </Box>
+      <Box sx={{flex:1, marginTop:40}}>
+        <Divider/>
+        <List>
+        <ListItem>
+          <ListItemButton onClick={logout}>
+            <ListItemIcon>
+              <LogoutRoundedIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
+        </List>
+      </Box>
+      </Box>
     </Box>
   );
 
   return (<ThemeProvider theme={theme}>
     <div className='background'>
-      <IconButton onClick={toggleDrawer} color="primary">
+      <IconButton onClick={toggleDrawer}>
         <MenuRoundedIcon />
       </IconButton>
-      <Typography variant='h4' sx={{ marginTop: 1, marginBottom: 1 }} color="primary">
+      <Typography variant='h4' sx={{ marginTop: 1, marginBottom: 1, fontFamily:'serif' }}>
         Personal Expense Tracker
       </Typography>
     </div>
