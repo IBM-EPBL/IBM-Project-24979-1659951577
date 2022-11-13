@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Bar, Doughnut } from 'react-chartjs-2';
-// import LoadingButton from '@mui/lab/LoadingButton';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,31 +10,17 @@ import {
     ArcElement,
     Legend,
 } from 'chart.js';
-import { Paper, Grid, Box, Avatar, Divider, Typography, IconButton } from "@mui/material";
+import { Paper, Grid, Box, Avatar, Divider, Typography, } from "@mui/material";
 import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartCheckoutRounded"
-import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded"
 import PriceCheckRoundedIcon from "@mui/icons-material/PriceCheckRounded"
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined"
 import AddIcon from '@mui/icons-material/Add';
-import Expense from "../expense_page/expense_page";
 import expensePage from "../expense_page/expense_page";
 import Lottie from 'react-lottie';
 import animationData from '../../assets/loading.json';
 import './style.css'
 import { server } from "../../config";
 export default function Dashboard() {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         bargraphdata: [],
-    //         piegraphdata: [],
-    //         totalExpense: 0,
-    //         balance: 0,
-    //         dailyExpense: 0,
-    //         weeklyExpense: 0,
-    //         isDataLoaded: false
-    //     };
-    // };
     const [bargraphdata, setbargraphdata] = useState([])
     const [bargraphlabel, setbargraphlabel] = useState([])
     const [piegraphdata, setpiegraphdata] = useState([])
@@ -43,7 +28,6 @@ export default function Dashboard() {
     const [totalExpense, settotalExpense] = useState(0)
     const [balance, setbalance] = useState(0)
     const [dailyExpense, setdailyExpense] = useState(0)
-    // const [weeklyExpense,setweeklyExpense] = useState(0)
     const [isDataLoaded, setisDataLoaded] = useState(false)
 
 
@@ -53,17 +37,10 @@ export default function Dashboard() {
         url.searchParams.set('email', email)
         fetch(url).then((res) => {
             res.json().then((data) => {
-                console.log(data.resultData)
-                // this.state.bargraphdata = data.bargraphdata
-                // this.state.piegraphdata = data.piegraphdata
                 if (data.resultData.totalExpense < 1000)
                     settotalExpense(data.resultData.totalExpense)
                 else
                     settotalExpense(Math.round(data.resultData.totalExpense / 1000) + "k")
-                // this.state.balance = data.balance
-                // this.state.dailyExpense = data.dailyExpense
-                // this.state.weeklyExpense = data.weeklyExpense
-                // setBargraphdata(data.bargraphdata)
                 setpiegraphdata(data.resultData.piegraphdata)
                 setpiegraphlabel(data.resultData.piegraphlabel)
                 setbargraphdata(data.resultData.bargraphdata)
@@ -76,43 +53,13 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        //Runs only on the first render
         loadData()
     }, []);
-    // state = {
-    //     bargraphdata: [],
-    //     piegraphdata: [],
-    //     totalExpense: 0,
-    //     balance: 0,
-    //     dailyExpense: 0,
-    //     weeklyExpense: 0,
-    //     isDataLoaded: false
-    // }
+
     const inputurl = new URL(window.location.href)
     const email = inputurl.searchParams.get('email')
 
-    // const expensePage = () => {
-    //     // return <>
-    //         // <Expense email="Hiiiii"/>
-    //     // </>
-    //     // alert("HIIIIIIIIII")
-    // }
-    // const loadData = async () => {
-    //     let url = new URL("http://localhost:5000/loadData")
-    //     url.searchParams.set('email',this.email)
-    //     fetch(url).then((res) => {
-    //         res.json().then((data) => {
-    //             console.log(data)
-    //             // this.state.bargraphdata = data.bargraphdata
-    //             // this.state.piegraphdata = data.piegraphdata
-    //             // this.state.totalExpense = data.totalExpense
-    //             // this.state.balance = data.balance
-    //             // this.state.dailyExpense = data.dailyExpense
-    //             // this.state.weeklyExpense = data.weeklyExpense
-    //             this.setState({ isDataLoaded: !this.state.isDataLoaded })
-    //         })
-    //     })
-    // }
+    
     const expense_Page = async () => {
         expensePage(email, balance, loadData)
     }
@@ -139,13 +86,11 @@ export default function Dashboard() {
             },
             title: {
                 display: false,
-                // text: 'Chart.js Bar Chart',
             },
         },
         maintainAspectRatio: false,
         barThickness: 10,
         borderRadius: 5,
-        // barPercen
     }
 
     const pieoptions = {
@@ -170,17 +115,6 @@ export default function Dashboard() {
                     '#e76f51',
                     '#8ecae6'
                 ],
-                // borderColor: [
-                //     'rgba(255, 99, 132, 1)',
-                //     'rgba(54, 162, 235, 1)',
-                //     'rgba(54, 162, 235, 1)',
-                //     'rgba(255, 206, 86, 1)',
-                //     'rgba(75, 192, 192, 1)',
-                //     'rgba(153, 102, 255, 1)',
-                //     'rgba(255, 159, 64, 1)',
-                //     'rgba(255, 206, 86, 1)',
-                //     'rgba(75, 192, 192, 1)',
-                // ],
                 borderWidth: 5,
             },
         ],
