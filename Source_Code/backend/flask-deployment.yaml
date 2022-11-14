@@ -15,10 +15,10 @@ spec:
       name: flask-pod
       labels:
         app: flask-pod
-spec:
-    containers:
-      - name: flask-container
-        image: backend
-        imagePullPolicy: Always
-        ports:
-          - containerPort: 5000
+    spec:
+     containers:
+     - name: flask-container
+       image: krish6221/pet:backend
+       imagePullPolicy: Always
+       ports:
+       - containerPort: 5000
