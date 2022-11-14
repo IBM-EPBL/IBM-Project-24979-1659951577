@@ -37,7 +37,7 @@ export default function expensePage(email, balance, func) {
                     timer: 2000
                 })
             } else {
-                const url = new URL("/addExpense")
+                const url = new URL(server+"/addExpense")
                 let expense = {
                     amount: parseInt(formValues[0]),
                     category: formValues[1],
@@ -62,7 +62,7 @@ export default function expensePage(email, balance, func) {
                         timer: 2000
                     })
                     if (balance - parseInt(formValues[0]) < 0) {
-                        let url = new URL("/limitExceed")
+                        let url = new URL(server+"/limitExceed")
                         url.searchParams.set('email', email)
                         fetch(url).then((res) => {
                             console.log(res.json())

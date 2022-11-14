@@ -21,7 +21,7 @@ export default class Login extends React.Component{
         const login = async() =>{
             const email = document.getElementById('emailInput_login').value;
             const password = document.getElementById('passwordInput_login').value;
-            let url= new URL("/login")
+            let url= new URL(server+"/login")
             url.searchParams.set('email',email)
             url.searchParams.set('password',password)
             fetch(url).then((res)=>{

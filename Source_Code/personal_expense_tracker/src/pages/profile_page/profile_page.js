@@ -18,7 +18,7 @@ export default function Profile() {
 
     const loadPersonalInfo = () => {
         setIsPersonalDataLoaded(false)
-        let url = new URL("/personalData")
+        let url = new URL(server+"/personalData")
         url.searchParams.set('email', email)
         fetch(url).then((res) => {
             res.json().then((data) => {
@@ -59,7 +59,7 @@ export default function Profile() {
             walletlimit: personalData.walletlimit == null ? 0 : personalData.walletlimit
         }
         console.log(credentials)
-        let url= new URL("/updateProfile") 
+        let url= new URL(server+"/updateProfile") 
         fetch(url,{
             method: 'POST',
             headers: {

@@ -47,7 +47,7 @@ export default class Register extends React.Component{
                     email: email,
                     password: password,
                 }
-                let url= new URL("/register")
+                let url= new URL(server+"/register")
                 fetch(url,{
                     method: 'POST',
                     headers: {

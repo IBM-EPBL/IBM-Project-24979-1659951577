@@ -22,7 +22,7 @@ spec:
     spec:
      containers:
      - name: frontend-container
-       image: krish6221/pet:ui
+       image: krish6221/pet:uiCopy1
        imagePullPolicy: Always
        ports:
        - containerPort: 3000
